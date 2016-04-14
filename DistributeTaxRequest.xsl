@@ -39,14 +39,15 @@
    </xsl:template>
    <xsl:template match="transactionType | lineItemId | lineItemNumber | taxDate"/>
    
-   <xsl:template match="VertexEnvelope/DistributeTaxRequest/LineItem/Product">
-         <xsl:copy>
-         <xsl:for-each select="productClass">
-                   <xsl:attribute name="{name()}"> <xsl:value-of select="text()"/> </xsl:attribute>
-         </xsl:for-each>
-         <xsl:apply-templates select="node()|@*"/>
-         </xsl:copy>
-   </xsl:template>
+   <xsl:template match="Product[following-sibling::productClass]">
+	  <xsl:copy>
+		<xsl:attribute name="productClass">
+			<xsl:value-of select="following-sibling::productClass"/>
+		</xsl:attribute>
+		 <xsl:value-of select="."/>
+	  </xsl:copy>
+	</xsl:template>
+
    <xsl:template match="productClass"/>
         
         
