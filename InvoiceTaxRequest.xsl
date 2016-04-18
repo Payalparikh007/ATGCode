@@ -39,7 +39,7 @@
     </xsl:template>
     <xsl:template match="transactionType | lineItemId | lineItemNumber | taxDate"/>
    
-    <xsl:template match="Product[following-sibling::productClass]">
+     <xsl:template match="Product[following-sibling::productClass]">
 	  <xsl:copy>
 		<xsl:attribute name="productClass">
 			<xsl:value-of select="following-sibling::productClass"/>
@@ -49,33 +49,8 @@
 	</xsl:template>
 	
     <xsl:template match="productClass"/>
-        
-        
-        <xsl:template match="VertexEnvelope/InvoiceRequest/FlexibleFields/FlexibleCodeField">
-         <xsl:copy>
-         <xsl:for-each select="fieldId">
-                   <xsl:attribute name="{name()}"> <xsl:value-of select="text()"/> </xsl:attribute>
-         </xsl:for-each>
-         <xsl:apply-templates select="node()|@*"/>
-         </xsl:copy>
-   </xsl:template>
-   <xsl:template match="fieldId"/>
-        
-        
-        
-        <xsl:template match="VertexEnvelope/InvoiceRequest/FlexibleFields/FlexibleDateField">
-         <xsl:copy>
-         <xsl:for-each select="fieldId">
-                   <xsl:attribute name="{name()}"> <xsl:value-of select="text()"/> </xsl:attribute>
-         </xsl:for-each>
-         <xsl:apply-templates select="node()|@*"/>
-         </xsl:copy>
-   </xsl:template>
-   <xsl:template match="fieldId"/>
 
-        
-   
-   <xsl:template match="Quantity[following-sibling::unitOfMeasure]">
+	<xsl:template match="Quantity[following-sibling::unitOfMeasure]">
   <xsl:copy>
     <xsl:attribute name="unitOfMeasure">
         <xsl:value-of select="following-sibling::unitOfMeasure"/>
@@ -92,6 +67,40 @@
     </xsl:attribute>
     </xsl:copy>
     </xsl:template>
+	
+    <xsl:template match="VertexEnvelope/InvoiceRequest/LineItem/FlexibleFields">
+         <xsl:copy>
+		 
+         <xsl:for-each select="codeField">
+		         <xsl:element name="FlexibleCodeField"> 
+				     <xsl:attribute name="fieldId"> <xsl:value-of select="./fieldId"/> </xsl:attribute>
+				 <xsl:value-of select="./FlexibleCodeField"/> 
+				 </xsl:element>
+                  
+         </xsl:for-each>
+		 
+		 <xsl:for-each select="dateField">
+		         <xsl:element name="FlexibleDateField"> 
+				     <xsl:attribute name="fieldId"> <xsl:value-of select="./fieldId"/> </xsl:attribute>
+				 <xsl:value-of select="./FlexibleDateField"/> 
+				 </xsl:element>
+                  
+         </xsl:for-each>
+		 
+		 <xsl:for-each select="numericField">
+		         <xsl:element name="FlexibleNumericField"> 
+				     <xsl:attribute name="fieldId"> <xsl:value-of select="./fieldId"/> </xsl:attribute>
+				 <xsl:value-of select="./FlexibleNumericField"/> 
+				 </xsl:element>
+                  
+         </xsl:for-each>
+
+	      <xsl:apply-templates select="node()|@*"/>
+         </xsl:copy>
+   </xsl:template>
+   <xsl:template match="codeField"/>
+   <xsl:template match="dateField"/>
+   <xsl:template match="numericField"/>
    
    <xsl:template match="*">
 	<xsl:element name="urn:{name()}" namespace="urn:vertexinc:o-series:tps:6:0">

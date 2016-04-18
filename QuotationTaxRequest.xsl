@@ -69,6 +69,40 @@
     </xsl:attribute>
     </xsl:copy>
     </xsl:template>
+	
+	   <xsl:template match="VertexEnvelope/QuotationRequest/LineItem/FlexibleFields">
+         <xsl:copy>
+		 
+         <xsl:for-each select="codeField">
+		         <xsl:element name="FlexibleCodeField"> 
+				     <xsl:attribute name="fieldId"> <xsl:value-of select="./fieldId"/> </xsl:attribute>
+				 <xsl:value-of select="./FlexibleCodeField"/> 
+				 </xsl:element>
+                  
+         </xsl:for-each>
+		 
+		 <xsl:for-each select="dateField">
+		         <xsl:element name="FlexibleDateField"> 
+				     <xsl:attribute name="fieldId"> <xsl:value-of select="./fieldId"/> </xsl:attribute>
+				 <xsl:value-of select="./FlexibleDateField"/> 
+				 </xsl:element>
+                  
+         </xsl:for-each>
+		 
+		 <xsl:for-each select="numericField">
+		         <xsl:element name="FlexibleNumericField"> 
+				     <xsl:attribute name="fieldId"> <xsl:value-of select="./fieldId"/> </xsl:attribute>
+				 <xsl:value-of select="./FlexibleNumericField"/> 
+				 </xsl:element>
+                  
+         </xsl:for-each>
+
+	      <xsl:apply-templates select="node()|@*"/>
+         </xsl:copy>
+   </xsl:template>
+   <xsl:template match="codeField"/>
+   <xsl:template match="dateField"/>
+   <xsl:template match="numericField"/>
    
    <xsl:template match="*">
         <xsl:element name="urn:{local-name()}" namespace="urn:vertexinc:o-series:tps:6:0">

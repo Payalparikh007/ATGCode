@@ -51,28 +51,7 @@
    <xsl:template match="productClass"/>
         
         
-        <xsl:template match="VertexEnvelope/DistributeTaxRequest/FlexibleFields/FlexibleCodeField">
-         <xsl:copy>
-         <xsl:for-each select="fieldId">
-                   <xsl:attribute name="{name()}"> <xsl:value-of select="text()"/> </xsl:attribute>
-         </xsl:for-each>
-         <xsl:apply-templates select="node()|@*"/>
-         </xsl:copy>
-   </xsl:template>
-   <xsl:template match="fieldId"/>
-        
-        
-        
-        <xsl:template match="VertexEnvelope/DistributeTaxRequest/FlexibleFields/FlexibleDateField">
-         <xsl:copy>
-         <xsl:for-each select="fieldId">
-                   <xsl:attribute name="{name()}"> <xsl:value-of select="text()"/> </xsl:attribute>
-         </xsl:for-each>
-         <xsl:apply-templates select="node()|@*"/>
-         </xsl:copy>
-   </xsl:template>
-   <xsl:template match="fieldId"/>
-   
+  
    
    <xsl:template match="Quantity[following-sibling::unitOfMeasure]">
   <xsl:copy>
@@ -92,6 +71,40 @@
     </xsl:attribute>
     </xsl:copy>
     </xsl:template>
+	
+	   <xsl:template match="VertexEnvelope/DistributeTaxRequest/LineItem/FlexibleFields">
+         <xsl:copy>
+		 
+         <xsl:for-each select="codeField">
+		         <xsl:element name="FlexibleCodeField"> 
+				     <xsl:attribute name="fieldId"> <xsl:value-of select="./fieldId"/> </xsl:attribute>
+				 <xsl:value-of select="./FlexibleCodeField"/> 
+				 </xsl:element>
+                  
+         </xsl:for-each>
+		 
+		 <xsl:for-each select="dateField">
+		         <xsl:element name="FlexibleDateField"> 
+				     <xsl:attribute name="fieldId"> <xsl:value-of select="./fieldId"/> </xsl:attribute>
+				 <xsl:value-of select="./FlexibleDateField"/> 
+				 </xsl:element>
+                  
+         </xsl:for-each>
+		 
+		 <xsl:for-each select="numericField">
+		         <xsl:element name="FlexibleNumericField"> 
+				     <xsl:attribute name="fieldId"> <xsl:value-of select="./fieldId"/> </xsl:attribute>
+				 <xsl:value-of select="./FlexibleNumericField"/> 
+				 </xsl:element>
+                  
+         </xsl:for-each>
+
+	      <xsl:apply-templates select="node()|@*"/>
+         </xsl:copy>
+   </xsl:template>
+   <xsl:template match="codeField"/>
+   <xsl:template match="dateField"/>
+   <xsl:template match="numericField"/>
         
    
    <xsl:template match="*">
