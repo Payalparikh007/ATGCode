@@ -20,13 +20,13 @@
  
    <xsl:template match="VertexEnvelope/QuotationRequest">
          <xsl:copy>
-         <xsl:for-each select="documentDate | documentNumber | postingDate | transactionType">
+         <xsl:for-each select="documentDate | documentNumber | postingDate | transactionType | transactionId">
                    <xsl:attribute name="{name()}"> <xsl:value-of select="text()"/> </xsl:attribute>
          </xsl:for-each>
          <xsl:apply-templates select="node()|@*"/>
          </xsl:copy>
    </xsl:template>
-   <xsl:template match="documentDate | documentNumber | postingDate | transactionType"/>
+   <xsl:template match="documentDate | documentNumber | postingDate | transactionType | transactionId"/>
       
    
    <xsl:template match="VertexEnvelope/QuotationRequest/LineItem">
