@@ -39,6 +39,26 @@
    </xsl:template>
    <xsl:template match="lineItemId | lineItemNumber | taxDate"/>
    
+   <xsl:template match="VertexEnvelope/QuotationRequest/Customer/Destination">
+         <xsl:copy>
+         <xsl:for-each select="taxAreaId">
+                   <xsl:attribute name="{name()}"> <xsl:value-of select="text()"/> </xsl:attribute>
+         </xsl:for-each>
+         <xsl:apply-templates select="node()|@*"/>
+         </xsl:copy>
+   </xsl:template>
+   <xsl:template match="taxAreaId"/>
+   
+    <xsl:template match="VertexEnvelope/QuotationRequest/Customer/AdministrativeDestination">
+         <xsl:copy>
+         <xsl:for-each select="taxAreaId">
+                   <xsl:attribute name="{name()}"> <xsl:value-of select="text()"/> </xsl:attribute>
+         </xsl:for-each>
+         <xsl:apply-templates select="node()|@*"/>
+         </xsl:copy>
+   </xsl:template>
+   <xsl:template match="taxAreaId"/>
+   
 <xsl:template match="Product[following-sibling::productClass]">
   <xsl:copy>
     <xsl:attribute name="productClass">
