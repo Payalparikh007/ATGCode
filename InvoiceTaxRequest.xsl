@@ -39,7 +39,7 @@
     </xsl:template>
     <xsl:template match="transactionType | lineItemId | lineItemNumber | taxDate"/>
 	
-	 <xsl:template match="VertexEnvelope/QuotationRequest/Customer/Destination">
+	 <xsl:template match="VertexEnvelope/InvoiceRequest/Customer/Destination">
          <xsl:copy>
          <xsl:for-each select="taxAreaId">
                    <xsl:attribute name="{name()}"> <xsl:value-of select="text()"/> </xsl:attribute>
@@ -49,7 +49,7 @@
    </xsl:template>
    <xsl:template match="taxAreaId"/>
    
-    <xsl:template match="VertexEnvelope/QuotationRequest/Customer/AdministrativeDestination">
+    <xsl:template match="VertexEnvelope/InvoiceRequest/Customer/AdministrativeDestination">
          <xsl:copy>
          <xsl:for-each select="taxAreaId">
                    <xsl:attribute name="{name()}"> <xsl:value-of select="text()"/> </xsl:attribute>
